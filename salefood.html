@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Penjualan Makanan Kucing - Pawtopia</title>
+  <!-- Google Fonts: Baloo 2 -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --pink-light: #FFD9DA;
+      --pink-main: #EA638C;
+      --pink-dark: #89023E;
+      --gray-dark: #30343F;
+      --black-dark: #1B2021;
+      --white: #fff;
+      --shadow: rgba(234, 99, 140, 0.25);
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Baloo 2', cursive, sans-serif;
+      background: var(--pink-light);
+      color: var(--gray-dark);
+      scroll-behavior: smooth;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    body {
+      padding-top: 56px;
+      flex-grow: 1;
+    }
+
+    /* Contact Sidebar */
+    .contact-sidebar {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--pink-dark);
+      padding: 15px;
+      border-radius: 8px;
+      color: white;
+      box-shadow: 0 4px 8px var(--shadow);
+      z-index: 1050;
+    }
+    .contact-sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .contact-sidebar a:hover {
+      color: var(--pink-light);
+    }
+    .contact-sidebar i {
+      font-size: 1.5rem;
+    }
+
+    /* Navbar */
+    nav.navbar {
+      background-color: var(--pink-dark);
+      box-shadow: 0 4px 8px var(--shadow);
+      padding: 0.8rem 1rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1030;
+    }
+    nav.navbar .navbar-brand,
+    nav.navbar .nav-link {
+      color: white !important;
+      font-weight: 500;
+    }
+    nav.navbar .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+    }
+    nav.navbar .navbar-brand svg {
+      width: 36px;
+      height: 36px;
+      fill: white;
+    }
+    nav.navbar .nav-link:hover {
+      color: var(--pink-light) !important;
+    }
+    .navbar-toggler {
+      border-color: var(--white);
+    }
+    .navbar-toggler-icon {
+      filter: invert(100%);
+    }
+
+    /* Main Section */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto 3rem;
+      padding-left: 0;
+      padding-right: 20px;
+      display: flex;
+      gap: 15px;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .sidebar {
+      flex: 0 0 300px;
+      background: var(--white);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px var(--shadow);
+      height: fit-content;
+    }
+    .sidebar h3 {
+      margin-top: 0;
+      color: var(--pink-dark);
+      margin-bottom: 15px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-bottom: 2px solid var(--pink-main);
+      padding-bottom: 6px;
+    }
+    .filter-group {
+      margin-bottom: 20px;
+    }
+    .filter-group label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--gray-dark);
+      user-select: none;
+    }
+    .filter-group input[type="checkbox"] {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .filter-group input[type="number"] {
+      width: 100%;
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    .filter-btn {
+      width: 100%;
+      background: var(--pink-main);
+      color: var(--white);
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .filter-btn:hover {
+      background: var(--pink-dark);
+    }
+
+    .product-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+      gap: 24px;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 6px 15px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+    }
+    .product-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 10px 25px var(--pink-main);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      background: var(--pink-light);
+      padding: 10px;
+    }
+
+    .product-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--pink-dark);
+      margin-bottom: 10px;
+      min-height: 48px;
+    }
+
+    .product-description {
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+      flex-grow: 1;
+      margin-bottom: 15px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 15px;
+    }
+
+    .star {
+      width: 20px;
+      height: 20px;
+      fill: var(--pink-main);
+      filter: drop-shadow(0 0 1px var(--pink-dark));
+    }
+
+    .star.empty {
+      fill: #ddd;
+    }
+
+    .rating-text {
+      font-weight: 600;
+      color: var(--pink-dark);
+      font-size: 0.9rem;
+    }
+
+    .price-buy {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .buy-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-buy {
+      background: var(--pink-main);
+      color: var(--white);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 8px var(--pink-dark);
+      transition: background 0.3s ease;
+      user-select: none;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-buy:hover {
+      background: var(--pink-dark);
+      box-shadow: 0 6px 14px var(--pink-main);
+    }
+
+    .qty-display {
+      min-width: 20px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--pink-dark);
+    }
+
+    footer {
+      background-color: var(--black-dark);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      font-family: 'Baloo 2', cursive, sans-serif;
+      font-weight: 500;
+      box-shadow: 0 -4px 8px var(--shadow);
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      flex-shrink: 0;
+    }
+
+    @media(max-width: 900px) {
+      main {
+        flex-direction: column;
+      }
+
+      .contact-sidebar {
+  position: fixed;
+  right: 20px;
+  bottom: 20px; /* Atur jarak dari bawah */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+        <circle cx="32" cy="32" r="30" fill="none" stroke="white" stroke-width="3"/>
+        <path d="M20 25c0-5 4-9 8-9s8 4 8 9" stroke="white" stroke-width="3" fill="none" />
+        <circle cx="24" cy="28" r="3" fill="white"/>
+        <circle cx="40" cy="28" r="3" fill="white"/>
+        <path d="M28 40c3 5 8 5 11 0" stroke="white" stroke-width="3" fill="none" />
+        <path d="M32 32l0 5" stroke="white" stroke-width="3" />
+        <circle cx="20" cy="18" r="5" fill="white"/>
+        <circle cx="44" cy="18" r="5" fill="white"/>
+      </svg>
+      Pawtopia
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="team.html">Our Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact us.html">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="text-center mb-3" style="position: relative">
+    <a href="service.html" style="position: absolute; top: 40px; left: 8%; font-size: 3rem; color: #89023d; text-decoration: none; z-index: 10">←</a>
+  </div>
+  <div class="container text-center py-5">
+
+<main>
+  <aside class="sidebar" aria-label="Filter Kategori dan Harga">
+    <h3>Filter Produk</h3>
+    <div class="filter-group">
+      <label><input type="checkbox" name="kategori" value="kering" /> Makanan Kering</label>
+      <label><input type="checkbox" name="kategori" value="basah" /> Makanan Basah</label>
+      <label><input type="checkbox" name="kategori" value="anakan" /> Makanan Anakan</label>
+    </div>
+    <div class="filter-group">
+      <label for="harga-min">Harga Min (Rp)</label>
+      <input type="number" id="harga-min" name="harga-min" min="0" placeholder="0" />
+    </div>
+    <div class="filter-group">
+      <label for="harga-max">Harga Max (Rp)</label>
+      <input type="number" id="harga-max" name="harga-max" min="0" placeholder="1000000" />
+    </div>
+    <button class="filter-btn" id="applyFilterBtn">Terapkan Filter</button>
+  </aside>
+
+  <section class="product-grid" aria-live="polite" aria-label="Daftar Produk Makanan Kucing">
+    <!-- Produk lengkap -->
+    <article class="product-card" tabindex="0" aria-describedby="desc1" data-kategori="basah" data-harga="30900">
+      <img src="images/royalcanin.jpeg" alt="Royal Canin" class="product-image" loading="lazy" />
+      <h2 class="product-title">Royal Canin Persia Kitten Pink</h2>
+      <p id="desc1" class="product-description">Makanan kucing basah dengan formula meningkatkan sistem imun dan kesehatan bulu.</p>
+      <div class="rating" aria-label="Rating produk 4 bintang dari 5">
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star empty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <span class="rating-text">(20)</span>
+      </div>
+      <div class="price-buy">
+        <div class="price">Rp30.900</div>
+        <div class="buy-controls" style="display:flex; align-items:center; gap:10px;">
+          <button class="btn-buy minus-btn" aria-label="Kurangi jumlah beli produk Royal Canin Persia Kitten Pink">-</button>
+          <span class="qty-display" aria-live="polite" aria-atomic="true">0</span>
+          <button class="btn-buy plus-btn" aria-label="Tambah jumlah beli produk Royal Canin Persia Kitten Pink">+</button>
+          <button type="button" class="btn btn-primary btn-buy order-now-btn" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card" tabindex="0" aria-describedby="desc2" data-kategori="basah" data-harga="26900">
+      <img src="images/makan1.png" alt="Whiskas Junior Rasa Tuna Pouch" class="product-image" loading="lazy" />
+      <h2 class="product-title">Whiskas Junior Rasa Tuna Pouch</h2>
+      <p id="desc2" class="product-description">Makanan kucing basah dengan formula meningkatkan sistem imun dan kesehatan bulu.</p>
+      <div class="rating" aria-label="Rating produk 3 bintang dari 5">
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star empty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star empty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <span class="rating-text">(15)</span>
+      </div>
+      <div class="price-buy">
+        <div class="price">Rp26.900</div>
+        <div class="buy-controls" style="display:flex; align-items:center; gap:10px;">
+          <button class="btn-buy minus-btn" aria-label="Kurangi jumlah beli produk Whiskas Junior Rasa Tuna Pouch">-</button>
+          <span class="qty-display" aria-live="polite" aria-atomic="true">0</span>
+          <button class="btn-buy plus-btn" aria-label="Tambah jumlah beli produk Whiskas Junior Rasa Tuna Pouch">+</button>
+          <button type="button" class="btn btn-primary btn-buy order-now-btn" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card" tabindex="0" aria-describedby="desc3" data-kategori="basah" data-harga="29500">
+      <img src="images/meo2.jpg" alt="Meo Kitten Ocean Fish" class="product-image" loading="lazy" />
+      <h2 class="product-title">Meo Kitten Ocean Fish</h2>
+      <p id="desc3" class="product-description">Makanan kucing basah dengan formula untuk kulit dan bulu sehat berkilau.</p>
+      <div class="rating" aria-label="Rating produk 5 bintang dari 5">
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <span class="rating-text">(35)</span>
+      </div>
+      <div class="price-buy">
+        <div class="price">Rp29.500</div>
+        <div class="buy-controls" style="display:flex; align-items:center; gap:10px;">
+          <button class="btn-buy minus-btn" aria-label="Kurangi jumlah beli produk Meo Kitten Ocean Fish">-</button>
+          <span class="qty-display" aria-live="polite" aria-atomic="true">0</span>
+          <button class="btn-buy plus-btn" aria-label="Tambah jumlah beli produk Meo Kitten Ocean Fish">+</button>
+          <button type="button" class="btn btn-primary btn-buy order-now-btn" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card" tabindex="0" aria-describedby="desc4" data-kategori="kering" data-harga="20000">
+      <img src="images/majes.jpeg" alt="Majes Cat Imunatte" class="product-image" loading="lazy" />
+      <h2 class="product-title">Majes Cat Freeze Dried</h2>
+      <p id="desc4" class="product-description">
+        Freeze dried adalah pengolahan daging mentah pada suhu rendah dengan teknologi canggih sehingga rasa alami dan nutrisinya tetap terjaga untuk kelezatan di setiap gigitan.
+      </p>
+      <div class="rating" aria-label="Rating produk 4 bintang dari 5">
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star empty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <span class="rating-text">(12)</span>
+      </div>
+      <div class="price-buy">
+        <div class="price">Rp20.000</div>
+        <div class="buy-controls" style="display:flex; align-items:center; gap:10px;">
+          <button class="btn-buy minus-btn" aria-label="Kurangi jumlah beli produk Majes Cat Freeze Dried">-</button>
+          <span class="qty-display" aria-live="polite" aria-atomic="true">0</span>
+          <button class="btn-buy plus-btn" aria-label="Tambah jumlah beli produk Majes Cat Freeze Dried">+</button>
+          <button type="button" class="btn btn-primary btn-buy order-now-btn" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+        </div>
+      </div>
+    </article>
+  </section>
+</main>
+
+<!-- Modal Order Now -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="orderForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Form Order Produk</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="emailInput" class="form-label">Email</label>
+          <input type="email" id="emailInput" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="phoneInput" class="form-label">Nomor Telepon</label>
+          <input type="tel" id="phoneInput" class="form-control" pattern="[0-9]{10,15}" required placeholder="Contoh: 081234567890" />
+        </div>
+            <!-- Provinces options here -->
+            <div class="mb-3">
+                <label for="provinsi" class="form-label">Pilih Provinsi</label>
+                <select class="form-select" id="provinsi" name="provinsi" required>
+                  <option value="" disabled selected>Pilih Provinsi</option>
+                  <option value="Aceh">Aceh</option>
+                  <option value="Sumatera Utara">Sumatera Utara</option>
+                  <option value="Sumatera Barat">Sumatera Barat</option>
+                  <option value="Riau">Riau</option>
+                  <option value="Kepulauan Riau">Kepulauan Riau</option>
+                  <option value="Jambi">Jambi</option>
+                  <option value="Sumatera Selatan">Sumatera Selatan</option>
+                  <option value="Bangka Belitung">Bangka Belitung</option>
+                  <option value="Bengkulu">Bengkulu</option>
+                  <option value="Lampung">Lampung</option>
+                  <option value="DKI Jakarta">DKI Jakarta</option>
+                  <option value="Jawa Barat">Jawa Barat</option>
+                  <option value="Banten">Banten</option>
+                  <option value="Jawa Tengah">Jawa Tengah</option>
+                  <option value="DI Yogyakarta">DI Yogyakarta</option>
+                  <option value="Jawa Timur">Jawa Timur</option>
+                  <option value="Bali">Bali</option>
+                  <option value="Nusa Tenggara Barat">Nusa Tenggara Barat</option>
+                  <option value="Nusa Tenggara Timur">Nusa Tenggara Timur</option>
+                  <option value="Kalimantan Barat">Kalimantan Barat</option>
+                  <option value="Kalimantan Tengah">Kalimantan Tengah</option>
+                  <option value="Kalimantan Selatan">Kalimantan Selatan</option>
+                  <option value="Kalimantan Timur">Kalimantan Timur</option>
+                  <option value="Kalimantan Utara">Kalimantan Utara</option>
+                  <option value="Sulawesi Utara">Sulawesi Utara</option>
+                  <option value="Gorontalo">Gorontalo</option>
+                  <option value="Sulawesi Tengah">Sulawesi Tengah</option>
+                  <option value="Sulawesi Barat">Sulawesi Barat</option>
+                  <option value="Sulawesi Selatan">Sulawesi Selatan</option>
+                  <option value="Sulawesi Tenggara">Sulawesi Tenggara</option>
+                  <option value="Maluku">Maluku</option>
+                  <option value="Maluku Utara">Maluku Utara</option>
+                  <option value="Papua">Papua</option>
+                  <option value="Papua Barat">Papua Barat</option>
+                </select>
+              </div>
+        </div>
+        <div class="mb-3">
+          <label for="recipientName" class="form-label">Nama Penerima</label>
+          <input type="text" id="recipientName" class="form-control" required />
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Kirim Order</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Pawtopia. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap JS Bundle CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.getElementById('applyFilterBtn').addEventListener('click', function() {
+    const checkedCategories = Array.from(document.querySelectorAll('input[name="kategori"]:checked'))
+      .map(input => input.value);
+
+    const hargaMinInput = document.getElementById('harga-min').value;
+    const hargaMaxInput = document.getElementById('harga-max').value;
+
+    const hargaMin = hargaMinInput ? parseInt(hargaMinInput, 10) : 0;
+    const hargaMax = hargaMaxInput ? parseInt(hargaMaxInput, 10) : Infinity;
+
+    const produkCards = document.querySelectorAll('.product-card');
+
+    produkCards.forEach(card => {
+      const kategori = card.getAttribute('data-kategori');
+      const harga = parseInt(card.getAttribute('data-harga'), 10);
+
+      const kategoriMatch = checkedCategories.length === 0 || checkedCategories.includes(kategori);
+      const hargaMatch = harga >= hargaMin && harga <= hargaMax;
+
+      if (kategoriMatch && hargaMatch) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  document.querySelectorAll('.product-card').forEach(card => {
+    const minusBtn = card.querySelector('.minus-btn');
+    const plusBtn = card.querySelector('.plus-btn');
+    const qtyDisplay = card.querySelector('.qty-display');
+
+    minusBtn.addEventListener('click', () => {
+      let currentQty = parseInt(qtyDisplay.textContent, 10);
+      if (currentQty > 0) {
+        qtyDisplay.textContent = currentQty - 1;
+      }
+    });
+
+    plusBtn.addEventListener('click', () => {
+      let currentQty = parseInt(qtyDisplay.textContent, 10);
+      qtyDisplay.textContent = currentQty + 1;
+    });
+  });
+
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('emailInput').value;
+    const phone = document.getElementById('phoneInput').value;
+    const province = document.getElementById('provinceSelect').value;
+    const recipient = document.getElementById('recipientName').value;
+
+    alert(`Order berhasil dikirim:\nEmail: ${email}\nTelepon: ${phone}\nProvinsi: ${province}\nNama Penerima: ${recipient}`);
+
+    this.reset();
+    const modalEl = document.getElementById('orderModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    modal.hide();
+  });
+</script>
+
+</body>
+</html>
