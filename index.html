@@ -1,266 +1,490 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tentang Kami - Hewan Peliharaan</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>home</title>
 
-  <!-- Bootstrap & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google Fonts: Baloo 2 -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
 
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #FFD9DA;
-      margin: 0;
-      padding: 0;
-    }
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    .about-section {
-      padding: 100px 0;
-      background: linear-gradient(135deg, #FFD9DA);
-      position: relative;
-      overflow: hidden;
-    }
+    <style>
+      :root {
+        --pink-light: #ffd9da;
+        --pink-main: #ea638c;
+        --pink-dark: #89023e;
+        --gray-dark: #30343f;
+        --black-dark: #1b2021;
+      }
 
-    .about-title {
-      font-size: 3rem;
-      font-weight: bold;
-      color: #89023E;
-      text-align: center;
-      margin-bottom: 50px;
-    }
+      body {
+        font-family: 'Baloo 2', cursive, sans-serif;
+        scroll-behavior: smooth;
+        color: var(--gray-dark);
+        margin: 0;
+        padding: 0;
+      }
 
-    .about-text {
-      font-size: 1.1rem;
-      color: #30343F;
-      line-height: 1.8;
-      text-align: justify;
-    }
+      .navbar {
+        background-color: var(--pink-dark);
+      }
 
-    .pet-img {
-      width: 100%;
-      border-radius: 20px;
-      object-fit: cover;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      transition: transform 0.4s ease-in-out;
-      position: relative;
-      z-index: 1;
-    }
+      .navbar-brand,
+      .nav-link {
+        color: white !important;
+        font-weight: 500;
+        font-family: 'Baloo 2', cursive, sans-serif;
+      }
 
-    .pet-img:hover {
-      transform: scale(1.05);
-    }
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.5rem;
+      }
 
-    .icon-circle {
-      background-color: #EA638C;
-      color: #FFD9DA;
-      font-size: 2rem;
-      padding: 15px;
-      border-radius: 50%;
-      margin-bottom: 15px;
-      display: inline-block;
-    }
+      .navbar-brand svg {
+        width: 36px;
+        height: 36px;
+        fill: white;
+      }
 
-    .btn-learn-more {
-      background-color: #f6b9c7;
-      color: #4b2c1e;
-      border-radius: 25px;
-      padding: 10px 25px;
-      transition: 0.3s;
-      text-decoration: none;
-    }  
+      .nav-link:hover {
+        color: var(--pink-light) !important;
+      }
 
-    .btn-learn-more:hover {
-      background-color: #f5a9b8;
-      color: #4b2c1e;
-    }
+      /* Hero Section */
+      .hero-section {
+        position: relative;
+        background-image: url('images/bgkucing.jpeg');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .testimonial-section {
-      margin-top: 80px;
-    }
+      .hero-overlay {
+        background-color: rgba(248, 178, 214, 0.639); /* Pink color with transparency */
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
 
-    .testimonial {
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(6px);
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
+      .hero-title {
+        font-family: 'Baloo 2', cursive, sans-serif;
+        color: var(--pink-dark);
+      }
 
-    .testimonial img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 15px;
-      border: 3px solid #EA638C;
-    }
+      .hero-img {
+        width: 450px; /* diperbesar */
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 2;
+      }
 
-    .testimonial h5 {
-      font-weight: 600;
-      color: #89023E;
-      margin-bottom: 5px;
-    }
+      .btn-pink {
+        background-color: var(--pink-main);
+        color: white;
+        font-weight: bold;
+        border: none;
+        font-family: 'Baloo 2', cursive, sans-serif;
+      }
 
-    .testimonial small {
-      color: #555;
-    }
+      .btn-pink:hover {
+        background-color: var(--pink-dark);
+      }
 
-    .testimonial p {
-      font-style: italic;
-      color: #333;
-    }
+      /* Animasi Jejak Kaki */
+      .paw-trail {
+        margin-top: 20px;
+        font-size: 24px;
+        display: flex;
+        gap: 12px;
+        animation: pawTrailMove 3s linear infinite;
+      }
 
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 1s ease;
-    }
+      @keyframes pawTrailMove {
+        0% {
+          opacity: 0;
+          transform: translateX(-20px) scale(0.8);
+        }
+        50% {
+          opacity: 1;
+          transform: translateX(0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(20px) scale(0.8);
+        }
+      }
 
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      /* Balon lucu di gambar - emoji lebih tersebar dan ukuran besar */
+      .balloon {
+        position: absolute;
+        font-size: 38px; /* ukuran besar */
+        animation: floatUpDown 4s ease-in-out infinite;
+        user-select: none;
+        z-index: 3;
+        opacity: 0.9;
+      }
 
-    .deco-kitty {
-      position: absolute;
-      width: 80px;
-      animation: float 4s ease-in-out infinite;
-      z-index: 0;
-    }
+      @keyframes floatUpDown {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.9;
+        }
+        50% {
+          transform: translateY(-18px);
+          opacity: 1;
+        }
+      }
 
-    .deco-kitty.k1 { top: 10px; left: 20px; }
-    .deco-kitty.k2 { bottom: 10px; right: 15px; width: 60px; }
+      .about-section {
+        padding: 100px 0;
+        background-color: #fff;
+      }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    :root {
-      --pink-light: #FFD9DA;
-      --pink-main: #EA638C;
-      --pink-dark: #89023E;
-      --gray-dark: #30343F;
-      --black-dark: #1B2021;
-    }
+      .img-tentang {
+        width: 150px;
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 20px;
+        object-fit: cover;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.4s ease;
+      }
 
-    body {
-      font-family: 'Baloo 2', cursive, sans-serif;
-      scroll-behavior: smooth;
-      color: var(--gray-dark);
-      margin: 0;
-      padding: 0;
-    }
+      .img-tentang:hover {
+        transform: scale(1.05);
+      }
 
-    .navbar {
-      background-color: var(--pink-dark);
-    }
+      .logo-tengah {
+        width: 150px;
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
 
-    .navbar-brand,
-    .nav-link {
-      color: white !important;
-      font-weight: 500;
-      font-family: 'Baloo 2', cursive, sans-serif;
-    }
+      .judul-tentang {
+        font-family: 'Baloo 2', cursive, sans-serif;
+        color: var(--pink-dark);
+        font-weight: bold;
+      }
 
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.5rem;
-    }
+      .deskripsi-tentang {
+        font-size: 16px;
+        color: #444;
+        margin-top: 10px;
+      }
 
-    .navbar-brand svg {
-      width: 36px;
-      height: 36px;
-      fill: white;
-    }
+      /* Animasi Popup */
+      @keyframes popupFadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
 
-    .nav-link:hover {
-      color: var(--pink-light) !important;
-    }
-  </style>
-</head>
-<body>
- <!-- Navbar -->
- <nav class="navbar navbar-expand-lg">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <!-- Logo lucu svg paw + kucing -->
-      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
-        <circle cx="32" cy="32" r="30" fill="none" stroke="white" stroke-width="3"/>
-        <path d="M20 25c0-5 4-9 8-9s8 4 8 9" stroke="white" stroke-width="3" fill="none" />
-        <circle cx="24" cy="28" r="3" fill="white"/>
-        <circle cx="40" cy="28" r="3" fill="white"/>
-        <path d="M28 40c3 5 8 5 11 0" stroke="white" stroke-width="3" fill="none" />
-        <path d="M32 32l0 5" stroke="white" stroke-width="3" />
-        <circle cx="20" cy="18" r="5" fill="white"/>
-        <circle cx="44" cy="18" r="5" fill="white"/>
-      </svg>
-      Pawtopia
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.html">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="team.html">Our Team</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact us.html">Contact Us</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+      /* Popup untuk why-box */
+      .why-box {
+        background: linear-gradient(135deg, #ffd9da, #ffb6c1);
+        padding: 30px 25px;
+        border-radius: 25px;
+        box-shadow: 0 8px 25px rgba(234, 99, 140, 0.4);
+        transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+        height: 100%;
+        position: relative;
+        cursor: pointer;
+        font-family: 'Baloo 2', cursive, sans-serif;
+        color: #800040;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
 
-  <!-- Dekorasi -->
-  <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="deco-kitty k1" alt="Kitty 1">
-  <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="deco-kitty k2" alt="Kitty 2">
+      /* Tambah ikon emoji di atas judul */
+      .why-box h5 {
+        font-size: 1.35rem;
+        margin-bottom: 12px;
+        position: relative;
+        padding-left: 40px;
+        font-weight: 700;
+        color: #700035;
+      }
 
-  <section id="about" class="about-section">
-    <div class="container">
-      <h2 class="about-title fade-in">
-        <i class="bi bi-heart-pulse-fill"></i> About Us 🐾
-      </h2>
-      <div class="row align-items-center gy-5">
-        <div class="col-lg-6 text-center fade-in">
-          <img src="images/gambar1.jpg" alt="Foto Kucing" class="pet-img">
-        </div>
-        <div class="col-lg-6 fade-in">
-          <div class="icon-circle">
-            <i class="bi bi-paw-fill"></i>
-          </div>
-          <p class="about-text">
-            🐈 Kami adalah komunitas pecinta hewan yang percaya bahwa setiap hewan berhak mendapatkan kasih sayang dan perhatian.
-            🐱 Mulai dari adopsi, perawatan, hingga edukasi — kami hadir untuk membantu menciptakan dunia yang lebih baik bagi sahabat berbulu kita.
-            💗 Dengan layanan profesional dan hati yang tulus, kami siap menjadi jembatan antara manusia dan hewan peliharaan yang bahagia.
-          </p>
-          <a href="service.html" class="btn btn-learn-more mt-3">Services ⏭</a>
+      /* Ikon lucu di kiri judul */
+      .why-box h5::before {
+        content: '🐾';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+      }
+
+      /* Paragraf */
+      .why-box p {
+        font-size: 1rem;
+        line-height: 1.4;
+        margin: 0;
+        flex-grow: 1;
+        color: #5a0030;
+      }
+
+      /* Hover effect: melayang dan warna lebih cerah */
+      .why-box:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 12px 30px rgba(234, 99, 140, 0.6);
+        background: linear-gradient(135deg, #ffb6c1, #ff7a95);
+        color: #fff;
+      }
+
+      .why-box:hover h5,
+      .why-box:hover p {
+        color: #fff;
+      }
+
+      /* Background pawprint saat show tetap ada tapi lebih soft */
+      .why-box.show {
+        animation-name: popupFadeIn;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-out;
+
+        background-image: url('https://i.ibb.co/3dDY0Kc/cat-pawprint.png');
+        background-repeat: no-repeat;
+        background-position: bottom right;
+        background-size: 60px 60px;
+        background-blend-mode: overlay;
+        background-color: #ffd9da;
+      }
+
+      .why-box.show::before {
+        content: '';
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        width: 60px;
+        height: 60px;
+        background-image: url('https://i.ibb.co/3dDY0Kc/cat-pawprint.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 0.12;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: 15px;
+      }
+
+      /* Popup untuk row pada section Tentang Kami */
+      #tentangKami .row {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+        animation-fill-mode: forwards;
+      }
+      #tentangKami .row.show {
+        animation-name: popupFadeIn;
+        animation-duration: 0.6s;
+        animation-timing-function: ease-out;
+      }
+
+      /* Style judul di why-section supaya juga pakai Baloo 2 */
+      .why-section h2.fw-bold {
+        font-family: 'Baloo 2', cursive, sans-serif;
+      }
+
+      footer {
+        background-color: var(--black-dark);
+        color: white;
+        text-align: center;
+        padding: 30px 0;
+        margin-top: 50px;
+        font-family: 'Baloo 2', cursive, sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <!-- Logo lucu svg paw + kucing -->
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+            <circle cx="32" cy="32" r="30" fill="none" stroke="white" stroke-width="3" />
+            <path d="M20 25c0-5 4-9 8-9s8 4 8 9" stroke="white" stroke-width="3" fill="none" />
+            <circle cx="24" cy="28" r="3" fill="white" />
+            <circle cx="40" cy="28" r="3" fill="white" />
+            <path d="M28 40c3 5 8 5 11 0" stroke="white" stroke-width="3" fill="none" />
+            <path d="M32 32l0 5" stroke="white" stroke-width="3" />
+            <circle cx="20" cy="18" r="5" fill="white" />
+            <circle cx="44" cy="18" r="5" fill="white" />
+          </svg>
+          Pawtopia
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about us.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="team.html">Our Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact us.html">Contact Us</a></li>
+          </ul>
         </div>
       </div>
-    </div>
-  </section>
+    </nav>
 
-  <!-- Fade Script -->
-  <script>
-    const fadeEls = document.querySelectorAll('.fade-in');
-    function onScrollFade() {
-      fadeEls.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
-          el.classList.add('visible');
-        }
-      });
-    }
-    window.addEventListener('scroll', onScrollFade);
-    window.addEventListener('load', onScrollFade);
-  </script>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-overlay">
+        <div class="container position-relative">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-dark">
+              <h1 class="display-5 fw-bold hero-title">Your Total Pet Solution</h1>
+              <p>All They Need, All in One Place.</p>
+              <a href="about us.html" class="btn btn-pink mt-3">About Us →</a>
+              <!-- Jejak kaki animasi -->
+              <div class="paw-trail" aria-label="Jejak kaki lucu">
+                <span class="paw" role="img" aria-hidden="true">🐾</span>
+                <span class="paw" role="img" aria-hidden="true">🐾</span>
+                <span class="paw" role="img" aria-hidden="true">🐾</span>
+                <span class="paw" role="img" aria-hidden="true">🐾</span>
+              </div>
+            </div>
+            <div class="col-md-6 text-center position-relative">
+              <img src="images/Cats.jpeg" alt="Dokter Hewan" class="hero-img" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Bootstrap Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <!-- Tentang Kami Section -->
+    <section id="tentangKami" class="about-section">
+      <div class="container">
+        <div class="row align-items-center justify-content-center gy-4">
+          <div class="col-md-4 d-flex flex-column gap-3 align-items-center">
+            <img src="images/kucinggemas.jpeg" class="img-tentang" alt="Kucing Gemas" />
+            <img src="images/mengg.jpeg" class="img-tentang" alt="Kucing Menggemaskan" />
+          </div>
+          <div class="col-md-3 text-center">
+            <img src="images/kucenghhh.jpeg" class="img-fluid rounded-4 shadow" style="width: 220px" alt="Logo Pawtopia" />
+          </div>
+          <div class="col-md-5">
+            <h3 class="judul-tentang">Pawtopia</h3>
+            <p class="deskripsi-tentang">
+              perusahaan terkemuka di bidang pemeliharaan kesehatan dan pengobatan hewan kesayangan, untuk meningkatkan kesejahteraan hewan dan manusia. Tidak hanya itu, Pawtopia juga menyediakan makanan terbaik untuk peliharaanmu.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kenapa Memilih Pawtopia -->
+    <section class="why-section py-5" style="background-color: #f7f2f2">
+      <div class="container text-center">
+        <h2 class="fw-bold mb-3">Kenapa Memilih Pawtopia?</h2>
+        <p class="mb-5 text-muted">Beberapa alasan kenapa kamu harus percaya pada layanan kami</p>
+
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-4 col-sm-6">
+            <div class="why-box">
+              <h5>Video Call</h5>
+              <p>Bertatap muka langsung secara online dengan tim kami.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="why-box">
+              <h5>Laporan Tiap Jam</h5>
+              <p>Kamu akan menerima laporan rutin untuk hewan yang rawat inap.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="why-box">
+              <h5>Layanan 24 Jam</h5>
+              <p>Layanan kami tersedia kapan pun kamu butuh.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="why-box">
+              <h5>Antar Jemput</h5>
+              <p>Kami siap menjemput dan mengantar hewan kesayanganmu.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="why-box">
+              <h5>Booking Online</h5>
+              <p>Pesan layanan dari mana pun lewat HP-mu.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="why-box">
+              <h5>Online Shop</h5>
+              <p>Belanja kebutuhan hewan secara mudah dan cepat.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 Pawtopia. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Popup Animation Script -->
+    <script>
+      // Animasi popup untuk box Kenapa Memilih Pawtopia
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationDelay = `${index * 0.2}s`;
+              entry.target.classList.add('show');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.why-box').forEach((el) => observer.observe(el));
+
+      // Animasi popup untuk section Tentang Kami
+      const tentangObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('show');
+              tentangObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      const tentangRow = document.querySelector('#tentangKami .row');
+      if (tentangRow) {
+        tentangObserver.observe(tentangRow);
+      }
+    </script>
+  </body>
 </html>
